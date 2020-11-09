@@ -37,7 +37,10 @@ class StringCalculatorKada{
 		int sum=0;
 		StringTokenizer str = new StringTokenizer(numbers,",");
 		while(str.hasMoreTokens()){
-			sum = sum + Integer.parseInt(str.nextToken());
+			int value = Integer.parseInt(str.nextToken());
+			if(value <= 1000){
+				sum += value;
+			}
 		}
 		return sum;
 	}
