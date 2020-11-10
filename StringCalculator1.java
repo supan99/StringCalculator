@@ -1,6 +1,8 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Scanner;
+import java.util.*;
+import java.lang.*;
 class NegativeNumberException extends Exception{
 	int msg;
 	NegativeNumberException(int msg){
@@ -41,19 +43,18 @@ class StringCalculatorKada{
 	
 	private static String extractNumbersFromInput(String input)throws NegativeNumberException,InvalidInputFormat{
 		String delimiter = ",";
-		StringBuilder str1 = new StringBuilder(input);
+		String str1;
 		if(input.contains("-")){
 			int index = input.indexOf("-");
 			if(Character.isDigit(input.charAt(index+1))){
 				throw new NegativeNumberException(index);
 			}
-		}if((input.lastIndexOf("\\n")+2)!=input.length()){
-			while(str1.indexOf("\\n") > 0 && str1.indexOf("\\n")+2<=(str1.toString().length())){
-				int position = str1.indexOf("\\n");
-				String str = str1.replace(position,position+2,delimiter).toString();
-			}
 		}
-		else{
+		if(Character.isDigit(input.charAt(input.length()-1))){					
+			Pattern pattern = Pattern.compile("\\D");
+			Matcher matcher = pattern.matcher(input);
+		    str1 = matcher.replaceAll(",");
+		}else{
 			throw new InvalidInputFormat("INVALID INPUT");
 		}
 		return str1;
